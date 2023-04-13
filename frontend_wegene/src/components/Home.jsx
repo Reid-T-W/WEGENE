@@ -1,0 +1,34 @@
+import { Box, Grid } from '@mui/material';
+import { Navbar, SearchBar, Postsfeed, Filters } from './';
+
+const Home = () => {
+  return (
+    <>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        marginTop='20px'
+        // style={{ minHeight: '100vh' }}
+      >
+        {/* <Box width= '500px' mt= '20px'> */}
+        <SearchBar />
+        {/* </Box> */}
+      </Grid>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        mt='20px'
+        style={{ minHeight: '100vh' }}
+      >
+        <Filters />
+        <Postsfeed />
+      </Grid>
+    </>
+  )
+}
+
+export default Home
