@@ -26,3 +26,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+
+
+#pending-donations-count {
+  position: absolute;
+  top: 35px;
+  right: 255px;
+  color: white;
+  background-color: hsl(26deg, 100%, 55%);
+  border-radius: 20%;
+  padding: 0 1px;
+}
+
+#chats-count {
+  position: absolute;
+  top: 35px;
+  right: 505px;
+  color: white;
+  background-color: hsl(26deg, 100%, 55%);
+  border-radius: 20%;
+  padding: 0 1px;
+}
+
+#notifications-count {
+  position: absolute;
+  top: 35px;
+  right: 445px;
+  color: white;
+  background-color: hsl(26deg, 100%, 55%);
+  border-radius: 20%;
+  padding: 0 1px;
+}
+
+
+
+

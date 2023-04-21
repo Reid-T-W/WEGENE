@@ -6,8 +6,10 @@ import { messages } from '../utils/constants'
 import LinearProgress from '@mui/material/LinearProgress';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useDynamic } from '../contexts/DynamicContext';
 
 const Postdetail= () => {
+  const { incrementPendingdonationsCount } = useDynamic();
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
     <Stack direction="row">
@@ -62,7 +64,7 @@ const Postdetail= () => {
       Raised 20,000 birr out of 100,000birr
       <LinearProgress variant='determinate' value='20' color='success' />
       <TextField id="outlined-basic" label="Amount" variant="outlined" placeholder="Amount"/>
-      <Button variant="contained">Add to donations</Button>
+      <Button onClick={ incrementPendingdonationsCount } variant="contained">Add to donations</Button>
       <Button variant="contained">Message</Button>
     </Stack>
   </Box>

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Typography, Card, CardContent, CardMedia, Box } from '@mui/material';
 import { CheckCircle } from '@mui/icons-material';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -6,11 +6,11 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { demoThumbnailUrl, demoVideoUrl, demoVideoTitle,
 demoChannelUrl, demoChannelTitle } from '../utils/constants';
 
-const Postcard = ({post: {id: {videoId }, snippet}}) => {
+const Postcard = ({post: {id: {videoId }, snippet}, idx}) => {
   return (
     <Card sx={{ width: { sm:'358px', md: '320px', xs: '100%' },
     boxShadow: 'none', borderRadius: 0}}>
-        <Link to='/'>
+        <Link to={`/posts/${idx}`}>
             <CardMedia 
                 image={snippet?.thumbnails?.high?.url}
                 alt={snippet?.title}

@@ -8,11 +8,99 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-
+import { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDynamic } from '../contexts/DynamicContext';
+import { getToLogoutAPI } from '../utils/getToLogoutAPI'
 const Navbar = () => {
+  // const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { isLoggedIn,
+          pendingdonationsCount, 
+          notificationsCount, 
+          unreadCount, 
+          resetUnreadCount, 
+          resetNotificationsCount, 
+          resetPendingdonationsCount 
+        } = useDynamic();
+
+  const renderLoggedInCompnents = () => {
+    if (isLoggedIn) {
+      return (
+        <>
+            <Button color="inherit">Logout</Button>
+            <p id="chats-count">{ unreadCount }</p>
+            <p id="notifications-count">{ notificationsCount }</p>
+            <p id="pending-donations-count">{ pendingdonationsCount }</p>
+        </>
+      )
+    }
+      else {
+        return <Button color="inherit">Login</Button>
+      }
+  }
+  // let loginButton;
+  // if (isLoggedIn) {
+  //   loginButton = 'Logout';
+  // } else {
+  //   loginButton = 'Login'
+  // }
+  const navigate = useNavigate();
+  const navigateToLogin = () => {
+      navigate("/login")
+  }
+  const {
+    sessionToken,
+    setSessionToken,
+    setIsLoggedIn,
+    setUsername
+    } = useDynamic();
+
+  const logoutUser = async() => {
+    const url = 'http://localhost:5000/api/v1/logout';
+    const headers = {"session_id": sessionToken};
+    return (await getToLogoutAPI(url, headers)
+    .then((response) => { 
+        // Get the session token from the response
+        setIsLoggedIn(false)
+        // Save the session_id to a state
+        setSessionToken('');
+        alert(response.data)
+        // Setting profile details
+        setUsername('');
+        // Redirect to login page
+        navigateToLogin();
+        
+    })
+    .catch((error) => { alert(error) }))
+}
+
+const dynamicNavLink = () => {
+  if (isLoggedIn) {
+    return (
+      <>
+        <Button onClick={ logoutUser } color="inherit">
+        <NavLink>Logout</NavLink>
+        </Button>
+      </>
+    )} else {
+    return (
+      <>
+        <Button onClick={ navigateToLogin } color="inherit">
+          <NavLink>Login</NavLink>
+        </Button>
+      </>
+    )}
+    
+  // if (isLoggedIn) {
+  //   dynamicNavLink = "<NavLink to={ '/logout' }>";
+  // } else {
+  //   dynamicNavLink = "<NavLink to={ '/login' }>"
+  // }
+}
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position='sticky'>
         <Toolbar>
           <IconButton
             size="large"
@@ -27,12 +115,24 @@ const Navbar = () => {
             <span class="logo" >WE</span>
             <span id="logo_color" class="logo">GENE</span>
           </Typography>
-          <Button color="inherit"><ChatIcon /></Button>
-          <Button color="inherit"><NotificationsIcon /></Button>
-          <Button color="inherit">Pending Donations</Button>
-          <Button color="inherit">Donate</Button>
-          <Button color="inherit">Profile</Button>
-          <Button color="inherit">Logout</Button>
+          <Button color="inherit" onClick={ resetUnreadCount }><ChatIcon /></Button>
+          
+          <Button onClick={ resetNotificationsCount }color="inherit">
+            <NotificationsIcon />
+          </Button>
+          
+          <Button onClick={resetPendingdonationsCount} color="inherit">
+            <NavLink to='/userpendingdonations'> Pending Donations </NavLink>
+          </Button>
+          
+          <Button color="inherit">
+            <NavLink to='/'> Posts </NavLink>
+          </Button>
+          <Button color="inherit">
+            <NavLink to='/userdonations'> Profile </NavLink>
+          </Button>
+          {/* {renderLoggedInCompnents() } */}
+            { dynamicNavLink() }
         </Toolbar>
       </AppBar>
     </Box>

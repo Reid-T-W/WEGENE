@@ -7,7 +7,7 @@ const Postsfeed = () => {
     const [posts, setPosts] = useState([]);
     // Lifecycle hook
     useEffect(() => {
-      fetchFromAPI(`search?part=snippet&q=New`)
+      fetchFromAPI(`https://youtube-v31.p.rapidapi.com/search?part=snippet&q=New`)
       .then((data) => setPosts(data.items))
     }, []);
 
