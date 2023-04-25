@@ -20,6 +20,15 @@ router.post('/api/v1/reset-password', AuthController.resetPassword);
 router.get('/api/v1/oauth/google', AuthController.googleOAuth);
 
 // User routes ----------------------------------------------------
+// Get User posts
+router.get('/api/v1/users/posts', UserController.getAllPostsByUser);
+
+// Get User donations
+router.get('/api/v1/users/donations', UserController.getAllDonationsByUser);
+
+// Get User pending donations
+router.get('/api/v1/users/pending-donations', UserController.getAllPendingDonationsByUser);
+
 // Routes for getting users
 
 router.get('/api/v1/users/:id', UserController.getUserById);
@@ -62,23 +71,28 @@ router.delete('/api/v1/posts/:id', PostController.deletePost);
 // Get donations for a single post
 router.get('/api/v1/posts/:id/donations', PostController.getAllDonationsByPost); // Socket.io
 
-// // Get pending donations for a single post
-// router.get('/api/v1/posts/:id/pending-donations', PostController.getAllPendingDonationsByPost); 
+// Get pending donations for a single post
+router.get('/api/v1/posts/:id/pending-donations', PostController.getAllPendingDonationsByPost); 
 // Socket.io
 
 // Make a donation to a post
 router.post('/api/v1/posts/:id/donations', PostController.postNewDonation);
 
-// Ask and Answer questions about a post
-router.post('/api/v1/posts/:id/qanda', PostController.questionAnswer);
-// Edit question and anwers on a post
-router.patch('/api/v1/posts/:id/qanda/:id', PostController.editQuestionAnswer);
-// Get all questions and answers on a post
-router.get('/api/v1/posts/:id/qanda', PostController.getAllQuestionsAnswersOnPost);
-// Get a single question and answer on a post
-router.get('/api/v1/posts/:id/qanda/:id', PostController.getQuestionAnswerOnPost);
-// Delete a question and answer on a post
-router.delete('/api/v1/posts/:id/qanda/:id', PostController.deleteQuestionAnswerOnPost);
+// Make a pending donation to a post
+router.post('/api/v1/posts/:id/pending-donations', PostController.postNewPendingDonation);
+
+// // Ask and Answer questions about a post
+// router.post('/api/v1/posts/:id/qanda', PostController.questionAnswer);
+// // Edit question and anwers on a post
+// router.patch('/api/v1/posts/:id/qanda/:id', PostController.editQuestionAnswer);
+// // Get all questions and answers on a post
+// router.get('/api/v1/posts/:id/qanda', PostController.getAllQuestionsAnswersOnPost);
+// // Get a single question and answer on a post
+// router.get('/api/v1/posts/:id/qanda/:id', PostController.getQuestionAnswerOnPost);
+// // Delete a question and answer on a post
+// router.delete('/api/v1/posts/:id/qanda/:id', PostController.deleteQuestionAnswerOnPost);
+
+
 
 // Search Routes ----------------------------------------------------
 // Search for posts

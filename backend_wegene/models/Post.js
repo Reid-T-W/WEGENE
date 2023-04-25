@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
+    totalRaised: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
     location: {
       type: DataTypes.TEXT,
     },

@@ -16,8 +16,11 @@ module.exports = {
             models.Picture.bulkCreate(_PICTURE);
             models.Document.bulkCreate(_DOCUMENT);
             models.Video.bulkCreate(_VIDEO);
-            models.CompletedDonation.bulkCreate(_COMPLETED_DONATION);
-            models.PendingDonation.bulkCreate(_PENDING_DONATION);
+            models.PendingDonation.bulkCreate(_PENDING_DONATION)
+            .then(() => {
+              models.CompletedDonation.bulkCreate(_COMPLETED_DONATION);
+            })
+            // models.CompletedDonation.bulkCreate(_COMPLETED_DONATION);
           });
       })
       .catch((error) => {

@@ -19,12 +19,6 @@ class AuthController {
     if (!email) {
       return res.status(400).json({ error: 'Missing email' });
     }
-    if (!password) {
-      return res.status(400).json({ error: 'Missing password' });
-    }
-    if (!confirmPassword) {
-      return res.status(400).json({ error: 'Missing password confirmation' });
-    }
     if (!username) {
       return res.status(400).json({ error: 'Missing username' });
     }
@@ -33,6 +27,12 @@ class AuthController {
     }
     if (!lastName) {
       return res.status(400).json({ error: 'Missing Lastname' });
+    }
+    if (!password) {
+      return res.status(400).json({ error: 'Missing password' });
+    }
+    if (!confirmPassword) {
+      return res.status(400).json({ error: 'Missing password confirmation' });
     }
     if (!role) {
       return res.status(400).json({ error: 'Missing Role' });

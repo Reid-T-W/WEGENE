@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   CompletedDonation.associate = (models) => {
     CompletedDonation.belongsTo(models.User);
     CompletedDonation.belongsTo(models.Post);
+    CompletedDonation.belongsTo(models.PendingDonation);
   };
 
   return CompletedDonation;
