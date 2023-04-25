@@ -3,10 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box } from '@mui/material';
 import { Home, Navbar, Postdetail, Login, Signup, Resetpassword, Userdonations, Userpendingdonations, Userposts } from './components';
 import { DynamicContextProvider } from "./contexts/DynamicContext";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <DynamicContextProvider>
+      <ToastContainer />
       <BrowserRouter>
       <Box sx={{ backgroundColor: '#FFFFFF' }}>
           <Navbar />

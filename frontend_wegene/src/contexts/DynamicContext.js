@@ -7,8 +7,9 @@ export function useDynamic() {
 }
 
 export const DynamicContextProvider = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [sessionToken, setSessionToken] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('isLoggedIn') ? sessionStorage.getItem('isLoggedIn') : false);
+    const sessionTokenFromSessionStorage = sessionStorage.getItem('sessionToken')
+    const [sessionToken, setSessionToken] = useState(sessionTokenFromSessionStorage? sessionTokenFromSessionStorage : '');
     const [pendingdonationsCount, setPendingdonationsCount] = useState(0);
     const [notificationsCount, setNotificationsCount] = useState(0);
     const [unreadCount, setUnreadCount] = useState(0);
@@ -19,7 +20,20 @@ export const DynamicContextProvider = ({ children }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [role, setRole] = useState('User');
-    
+
+    // Posts
+    const postsFromSessionStorage = sessionStorage.getItem('posts')
+    // const [posts, setPosts] = useState(sessionStorage.getItem('posts') ? sessionStorage.getItem('posts') : []);
+    const [posts, setPosts] = useState( postsFromSessionStorage? JSON.parse(postsFromSessionStorage) : []);
+
+    // User
+    const userDonationsFromSessionStorage = sessionStorage.getItem('userDonations')
+    const userPendingDonationsFromSessionStorage = sessionStorage.getItem('userPendingDonations')
+    const userPostsFromSessionStorage = sessionStorage.getItem('userPosts')
+    const [userDonations, setUserDonations] = useState( userDonationsFromSessionStorage? JSON.parse(userDonationsFromSessionStorage) : []);
+    const [userPendingDonations, setUserPendingDonations] = useState( userPendingDonationsFromSessionStorage? JSON.parse(userPendingDonationsFromSessionStorage) : []);
+    const [userPosts, setUserPosts] = useState( userPostsFromSessionStorage? JSON.parse(userPostsFromSessionStorage) : []);
+
     const resetUnreadCount = () => {
         setUnreadCount(0);
     }
@@ -66,7 +80,15 @@ export const DynamicContextProvider = ({ children }) => {
         lastName,
         setLastName,
         role,
-        setRole
+        setRole,
+        posts,
+        setPosts,
+        userDonations,
+        setUserDonations,
+        userPendingDonations,
+        setUserPendingDonations,
+        userPosts,
+        setUserPosts,
     };
     
     return (

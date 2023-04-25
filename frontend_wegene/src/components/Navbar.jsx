@@ -8,20 +8,42 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDynamic } from '../contexts/DynamicContext';
 import { getToLogoutAPI } from '../utils/getToLogoutAPI'
+import { toast } from 'react-toastify';
+
 const Navbar = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(true);
   const { isLoggedIn,
+          setIsLoggedIn,
           pendingdonationsCount, 
           notificationsCount, 
           unreadCount, 
           resetUnreadCount, 
           resetNotificationsCount, 
-          resetPendingdonationsCount 
+          resetPendingdonationsCount,
+          sessionToken,
+          setSessionToken,
+          setUsername
         } = useDynamic();
+  
+  // Retrieving from session storage
+  useEffect(() => {
+    const loggedInStatus = JSON.parse(sessionStorage.getItem('isLoggedIn'));
+    setIsLoggedIn(loggedInStatus);
+  }, []);
+  
+  // Save session token to session storage
+  useEffect(() => {
+      sessionStorage.setItem('sessionToken', sessionToken);
+    }, [sessionToken]);
+  
+  // Saving logged in status to session storage
+  useEffect(() => {
+    sessionStorage.setItem('isLoggedIn', isLoggedIn);
+  }, [isLoggedIn]);
 
   const renderLoggedInCompnents = () => {
     if (isLoggedIn) {
@@ -48,12 +70,9 @@ const Navbar = () => {
   const navigateToLogin = () => {
       navigate("/login")
   }
-  const {
-    sessionToken,
-    setSessionToken,
-    setIsLoggedIn,
-    setUsername
-    } = useDynamic();
+  // const {
+
+  //   } = useDynamic();
 
   const logoutUser = async() => {
     const url = 'http://localhost:5000/api/v1/logout';
@@ -64,7 +83,7 @@ const Navbar = () => {
         setIsLoggedIn(false)
         // Save the session_id to a state
         setSessionToken('');
-        alert(response.data)
+        toast(response.data)
         // Setting profile details
         setUsername('');
         // Redirect to login page

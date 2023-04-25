@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { Postsfeed } from './';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -29,20 +30,27 @@ const Login = () => {
         const url = 'http://localhost:5000/api/v1/login';
         const data = { username, password }
         return (await postToLoginAPI(url, data)
-        .then((response) => { 
+        .then((response) => {
             // Get the session token from the response
             setIsLoggedIn(true)
             // Save the session_id to a state
             setSessionToken(response.session_id);
-            alert(response.data)
+            toast.success(response.data)
             // Setting profile details
             setUsername(response.userData.username);
             navigateToPostsFeed();
             // Redirect to postfeeds page
             // const history = useHistory();
         })
-        .catch((error) => { alert(error) }))
+        .catch((error) => {
+            // console.log(error);
+            toast.error(String(error));
+        }))
     }
+
+    // useEffect(() => {
+    //     sessionStorage.setItem('sessionToken', JSON.stringify(sessionToken));
+    //   }, [sessionToken]);
     const paperStyle={padding :20, height:'75vh', width:280, margin:"20px auto"}
     const avatarStyle={backgroundColor:'#5800FF'}
     const btn={margin:'8px 0'}

@@ -9,6 +9,7 @@ import { useCookies } from 'react-cookie';
       const session_id = Cookies.get('session_id');
       return({ data: data.data.message, session_id, userData: data.data.userData }) 
     })
-    .catch((error) => { 
-      return(error.response.data.error) });
+    .catch((error) => {
+      throw Error(error.response.data.error);
+    })
 }

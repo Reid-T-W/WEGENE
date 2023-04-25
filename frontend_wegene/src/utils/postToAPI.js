@@ -9,5 +9,6 @@ import { useCookies } from 'react-cookie';
       return({ data: data.data.message }) 
     })
     .catch((error) => { 
-      return(error.response.data.error) });
+      throw Error(error.response.data.error) 
+    });
 }

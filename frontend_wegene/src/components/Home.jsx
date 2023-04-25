@@ -1,5 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import { Navbar, SearchBar, Postsfeed, Filters } from './';
+import { useEffect } from 'react';
 
 const Home = () => {
   return (
@@ -25,7 +26,7 @@ const Home = () => {
         style={{ minHeight: '100vh' }}
       >
         <Filters />
-        <Postsfeed />
+          <Postsfeed />
       </Grid>
     </>
   )

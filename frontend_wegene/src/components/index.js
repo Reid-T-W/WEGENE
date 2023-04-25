@@ -15,4 +15,6 @@ export { default as Userdonations } from './Userdonations';
 export { default as Userpendingdonations } from './Userpendingdonations';
 export { default as Userposts } from './Userposts';
 export { default as Usereditprofile } from './Usereditprofile';
-export { default as StickyHeadTable } from './StickyHeadTable';
+export { default as StickyHeadTableForUserDonations } from './StickyHeadTableForUserDonations';
+export { default as StickyHeadTableForUserPendingDonations } from './StickyHeadTableForUserPendingDonations';
+export { default as StickyHeadTableForUserPosts } from './StickyHeadTableForUserPosts';

@@ -16,7 +16,6 @@ Implement landing page
 ~~Connect login page to backend~~
 ~~Connect forgopassword page to backend~~
 Read on how session managmenet is done in react
-Read on how you can use middlewars for auth in you backend
 Implement both
 Implement all other routes
 Implement input checking in the frontend as well.
