@@ -16,7 +16,7 @@ import { useDynamic } from '../contexts/DynamicContext';
     justifyContent="center" gap={2}>
       {posts.map((post) => (
         <Box key={post.id}>
-          {post.id && <Postcard id={post.id} post={post} pictureFile='http://dummyimage.com/217x100.png/ff4444/ffffff'/>}
+          {post.id && <Postcard id={post.id} post={post}/>}
         </Box>
       ))}
 

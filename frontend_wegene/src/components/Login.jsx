@@ -24,7 +24,10 @@ const Login = () => {
         isLoggedIn,
         setIsLoggedIn,
         sessionToken,
-        setSessionToken } = useDynamic();
+        setSessionToken,
+        setEmail,
+        setFirstName,
+        setLastName } = useDynamic();
 
     const loginUser = async() => {
         const url = 'http://localhost:5000/api/v1/login';
@@ -38,6 +41,9 @@ const Login = () => {
             toast.success(response.data)
             // Setting profile details
             setUsername(response.userData.username);
+            setFirstName(response.userData.firstName);
+            setLastName(response.userData.lastName);
+            setEmail(response.userData.email);
             navigateToPostsFeed();
             // Redirect to postfeeds page
             // const history = useHistory();

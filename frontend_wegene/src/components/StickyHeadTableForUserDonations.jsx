@@ -19,8 +19,8 @@ const columns = [
   { id: 'title', label: 'Title', minWidth: 170 },
   { id: 'category', label: 'Category', minWidth: 100 },
   {
-    id: 'required',
-    label: 'Required',
+    id: 'donated',
+    label: 'My Donations',
     minWidth: 170,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
@@ -41,9 +41,9 @@ const columns = [
   }
 ];
 
-function createData(id, title, category, required, raised, modify) {
+function createData(id, title, category, donated, raised, modify) {
   // const density = population / size;
-  return { id, title, category, required, raised, modify };
+  return { id, title, category, donated, raised, modify };
 }
 
 const title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
@@ -103,8 +103,13 @@ export default function StickyHeadTableForUserDonations() {
       fetchUserDonations()
       },[])
 
-  const rows = userDonations.map((post) => {
-    return createData(post.id, post.title, post.category, post.amount, post.totalRaised, options)
+  const rows = userDonations.map((userDonation) => {
+    return createData(userDonation.id,
+                      userDonation.Post.title,
+                      userDonation.Post.category,
+                      userDonation.amount,
+                      `${Math.floor((userDonation.Post.totalRaised / userDonation.Post.amount) * 100)} %`,
+                      options)
   })
   // const rows = [
   //   createData(title, 'IN', 1324171354, 3287263, options),

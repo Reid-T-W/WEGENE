@@ -3,21 +3,23 @@ import { Userdonations, Userpendingdonations, Userposts, Usereditprofile} from '
 import { NavLink } from 'react-router-dom'
 import { Container, Nav, Navbar as NavbarBs } from "react-bootstrap"
 
+const navLinkStyle = {color: 'gray', textDecoration: 'none'}
+const navLinkActiveStyle = {textDecoration: 'underline'}
 const Userprofileoptions = () => {
   return (
     <Grid mt='50px' align='center'>
     <Typography>
-        <NavLink to='/userdonations'>
+        <NavLink style={navLinkStyle} to='/userdonations'>
             DONATIONS
         </NavLink>
-        <NavLink to='/userpendingdonations'> |
+        <NavLink style={navLinkStyle} to='/userpendingdonations'> |
             PENDING DONATIONS
         </NavLink>
-        <NavLink to='/userposts'> |
+        <NavLink style={navLinkStyle} to='/userposts'> |
             POSTS
         </NavLink>
-        <NavLink to='/usereditprofile'> |
-            EDIT PROFILE
+        <NavLink style={navLinkStyle} to='/edituserprofile'> |
+            UPDATE PROFILE
         </NavLink>
     </Typography>
     </Grid>

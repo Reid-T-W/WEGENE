@@ -1,11 +1,17 @@
 import { Typography, Link, Grid, Button } from '@mui/material'
-import { Userpendingdonations, Userposts, Userdonations, Userprofileoptions } from '.'
+import { Userprofileoptions, EditProfile } from '.'
 
 const Usereditprofile = () => {
   return (
-    <Grid mt='50px' align='center'>
-      <Userprofileoptions />
-    </Grid>
+    <>
+      <Grid mt='50px' align='center'>
+        <Userprofileoptions />
+        <Typography mt='20px'> Update Profile </Typography>
+      </Grid>
+      <Grid mt="30px">
+          <EditProfile />
+      </Grid>
+    </>
   )
 }
 

@@ -10,7 +10,8 @@ export const DynamicContextProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('isLoggedIn') ? sessionStorage.getItem('isLoggedIn') : false);
     const sessionTokenFromSessionStorage = sessionStorage.getItem('sessionToken')
     const [sessionToken, setSessionToken] = useState(sessionTokenFromSessionStorage? sessionTokenFromSessionStorage : '');
-    const [pendingdonationsCount, setPendingdonationsCount] = useState(0);
+    const pendingdonationsCountFromSessionStorage = sessionStorage.getItem('pendingdonationsCount')
+    const [pendingdonationsCount, setPendingdonationsCount] = useState(pendingdonationsCountFromSessionStorage? JSON.parse(pendingdonationsCountFromSessionStorage):0);
     const [notificationsCount, setNotificationsCount] = useState(0);
     const [unreadCount, setUnreadCount] = useState(0);
     const [email, setEmail] = useState('');
@@ -26,6 +27,10 @@ export const DynamicContextProvider = ({ children }) => {
     // const [posts, setPosts] = useState(sessionStorage.getItem('posts') ? sessionStorage.getItem('posts') : []);
     const [posts, setPosts] = useState( postsFromSessionStorage? JSON.parse(postsFromSessionStorage) : []);
 
+    // PostDetails
+    const postDetailsFromSessionStorage = sessionStorage.getItem('postDetails')
+    const [postDetails, setPostDetails] = useState(postDetailsFromSessionStorage? JSON.parse(postDetailsFromSessionStorage):{});
+
     // User
     const userDonationsFromSessionStorage = sessionStorage.getItem('userDonations')
     const userPendingDonationsFromSessionStorage = sessionStorage.getItem('userPendingDonations')
@@ -33,7 +38,17 @@ export const DynamicContextProvider = ({ children }) => {
     const [userDonations, setUserDonations] = useState( userDonationsFromSessionStorage? JSON.parse(userDonationsFromSessionStorage) : []);
     const [userPendingDonations, setUserPendingDonations] = useState( userPendingDonationsFromSessionStorage? JSON.parse(userPendingDonationsFromSessionStorage) : []);
     const [userPosts, setUserPosts] = useState( userPostsFromSessionStorage? JSON.parse(userPostsFromSessionStorage) : []);
-
+    // New Post
+    const [titleNewPost, setTitleNewPost] = useState('');
+    const [descriptionNewPost, setDescriptionNewPost] = useState('');
+    const [amountNewPost, setAmountNewPost] = useState(0);
+    const [locationNewPost, setLocationNewPost] = useState('');
+    const [categoryNewPost, setCategoryNewPost] = useState('');
+    const [imageNewPost, setImageNewPost] = useState('');
+    const [videoNewPost, setVideoNewPost] = useState('');
+    const [documentNewPost, setDocumentNewPost] = useState('');
+  
+    
     const resetUnreadCount = () => {
         setUnreadCount(0);
     }
@@ -60,6 +75,7 @@ export const DynamicContextProvider = ({ children }) => {
         sessionToken,
         setSessionToken,
         pendingdonationsCount, 
+        setPendingdonationsCount,
         resetPendingdonationsCount,
         notificationsCount,
         resetNotificationsCount,
@@ -89,6 +105,24 @@ export const DynamicContextProvider = ({ children }) => {
         setUserPendingDonations,
         userPosts,
         setUserPosts,
+        titleNewPost,
+        setTitleNewPost,
+        descriptionNewPost,
+        setDescriptionNewPost,
+        amountNewPost,
+        setAmountNewPost,
+        locationNewPost,
+        setLocationNewPost,
+        categoryNewPost,
+        setCategoryNewPost,
+        imageNewPost,
+        setImageNewPost,
+        videoNewPost,
+        setVideoNewPost,
+        documentNewPost,
+        setDocumentNewPost,
+        postDetails,
+        setPostDetails
     };
     
     return (

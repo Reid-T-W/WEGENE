@@ -7,12 +7,15 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
+import AddIcon from '@mui/icons-material/Add';
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDynamic } from '../contexts/DynamicContext';
 import { getToLogoutAPI } from '../utils/getToLogoutAPI'
 import { toast } from 'react-toastify';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
 const Navbar = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -26,7 +29,8 @@ const Navbar = () => {
           resetPendingdonationsCount,
           sessionToken,
           setSessionToken,
-          setUsername
+          setUsername,
+          username
         } = useDynamic();
   
   // Retrieving from session storage
@@ -70,9 +74,6 @@ const Navbar = () => {
   const navigateToLogin = () => {
       navigate("/login")
   }
-  // const {
-
-  //   } = useDynamic();
 
   const logoutUser = async() => {
     const url = 'http://localhost:5000/api/v1/logout';
@@ -91,37 +92,50 @@ const Navbar = () => {
         
     })
     .catch((error) => { alert(error) }))
-}
+  }
+
+  const navigateToCreatePost = () => {
+    navigate("/postuploadform")
+  }
+
+  const createPost = async() => {
+    navigateToCreatePost();
+  }
 
 const dynamicNavLink = () => {
   if (isLoggedIn) {
     return (
       <>
         <Button onClick={ logoutUser } color="inherit">
-        <NavLink>Logout</NavLink>
+          <NavLink style={navLinkStyle}>Logout</NavLink>
         </Button>
+        <Typography>{`Welcome ${username}`}</Typography>
       </>
     )} else {
     return (
       <>
         <Button onClick={ navigateToLogin } color="inherit">
-          <NavLink>Login</NavLink>
+          <NavLink style={navLinkStyle}>Login</NavLink>
         </Button>
       </>
     )}
-    
-  // if (isLoggedIn) {
-  //   dynamicNavLink = "<NavLink to={ '/logout' }>";
-  // } else {
-  //   dynamicNavLink = "<NavLink to={ '/login' }>"
-  // }
 }
 
+const displayNotificationCount = () => {
+  if (isLoggedIn) {
+    return (
+      <>
+        <p id="pending-donations-count">{ pendingdonationsCount }</p>
+      </>
+    )
+  }
+}
+  const navLinkStyle = {color: 'white', textDecoration: 'none'}
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='sticky'>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -129,26 +143,31 @@ const dynamicNavLink = () => {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <span class="logo" >WE</span>
             <span id="logo_color" class="logo">GENE</span>
           </Typography>
-          <Button color="inherit" onClick={ resetUnreadCount }><ChatIcon /></Button>
-          
-          <Button onClick={ resetNotificationsCount }color="inherit">
+          {/* <Button color="inherit" onClick={ resetUnreadCount }><ChatIcon /></Button> */}
+          <Button color="inherit" onClick={ createPost }>
+            <AddCircleOutlinedIcon />
+          </Button>
+          {/* <Button onClick={ resetNotificationsCount }color="inherit">
             <NotificationsIcon />
-          </Button>
+          </Button> */}
           
-          <Button onClick={resetPendingdonationsCount} color="inherit">
-            <NavLink to='/userpendingdonations'> Pending Donations </NavLink>
+          <Button color="inherit">
+            <NavLink style={navLinkStyle} to='/userpendingdonations'> 
+              <VolunteerActivismIcon />
+            </NavLink>
+            { displayNotificationCount() }
           </Button>
           
           <Button color="inherit">
-            <NavLink to='/'> Posts </NavLink>
+            <NavLink style={navLinkStyle} to='/'> Posts </NavLink>
           </Button>
           <Button color="inherit">
-            <NavLink to='/userdonations'> Profile </NavLink>
+            <NavLink style={navLinkStyle} to='/userdonations'> Profile </NavLink>
           </Button>
           {/* {renderLoggedInCompnents() } */}
             { dynamicNavLink() }

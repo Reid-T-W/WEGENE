@@ -29,13 +29,19 @@ code {
 
 
 #pending-donations-count {
-  position: absolute;
-  top: 35px;
-  right: 255px;
+  position: relative;
+  top: 15px;
+  right: 2px;
   color: white;
+  width: 16px;
+  height: 16px;
+  padding: 4px;
   background-color: hsl(26deg, 100%, 55%);
-  border-radius: 20%;
-  padding: 0 1px;
+  border-radius: 50%;
+  padding: 2px;
+  text-align: center;
+  font: 14px Arial, sans-serif;
+  /* background-position: -35px; */
 }
 
 #chats-count {

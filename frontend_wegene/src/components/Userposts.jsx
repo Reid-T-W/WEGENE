@@ -15,6 +15,7 @@ const Userposts = () => {
     <>
       <Grid mt='50px' align='center'>
         <Userprofileoptions />
+        <Typography mt='20px'> Posts </Typography>
       </Grid>
       <Grid mt="30px">
           <StickyHeadTableForUserPosts />

@@ -1,7 +1,20 @@
 // import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box } from '@mui/material';
-import { Home, Navbar, Postdetail, Login, Signup, Resetpassword, Userdonations, Userpendingdonations, Userposts } from './components';
+import { Home,
+         Navbar,
+         Postdetail,
+         Login,
+         Signup,
+         Resetpassword,
+         Userdonations,
+         Userpendingdonations,
+         Userposts,
+         PostUploadForm,
+         Usereditprofile,
+         VerifyPayment,
+         PaymentSuccess
+         } from './components';
 import { DynamicContextProvider } from "./contexts/DynamicContext";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -9,7 +22,10 @@ import { ToastContainer } from 'react-toastify';
 function App() {
   return (
     <DynamicContextProvider>
-      <ToastContainer />
+      <ToastContainer 
+        position="top-center"
+        closeOnClick
+      />
       <BrowserRouter>
       <Box sx={{ backgroundColor: '#FFFFFF' }}>
           <Navbar />
@@ -23,6 +39,11 @@ function App() {
               <Route path="/userdonations" element={<Userdonations />} />
               <Route path="/userpendingdonations" element={<Userpendingdonations />} />
               <Route path="/userposts" element={<Userposts />} />
+              <Route path="/postuploadform" element={<PostUploadForm />} />
+              <Route path="/edituserprofile" element={<Usereditprofile />} />
+              <Route path="/verify-payment" element={<VerifyPayment />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+
               {/* <Route path="/channel/:id" element={<ChannelDetail />} />
               <Route path="/search/:searchTerm" element={<SearchFeed />} /> */}
           </Routes> 

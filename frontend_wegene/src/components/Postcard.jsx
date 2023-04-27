@@ -7,7 +7,7 @@ import { useDynamic } from '../contexts/DynamicContext';
 import { demoThumbnailUrl, demoVideoUrl, demoVideoTitle,
 demoChannelUrl, demoChannelTitle } from '../utils/constants';
 
-const Postcard = ({id, post, pictureFile}) => {
+const Postcard = ({id, post}) => {
   // Importing states
   const {
     posts
@@ -22,8 +22,9 @@ const Postcard = ({id, post, pictureFile}) => {
     <Card sx={{ width: { sm:'358px', md: '320px', xs: '100%' },
     boxShadow: 'none', borderRadius: 0}}>
         <Link to={`/posts/${id}`}>
+          {/* {console.log(post['Pictures'][0]['pictureFile']?post['Pictures'][0]['pictureFile']:'')} */}
             <CardMedia 
-                image={pictureFile}
+                image={post['Pictures'][0]? post['Pictures'][0]['pictureFile']:""}
                 alt={post.title}
                 sx={{ width: 358, height: 180 }}
             />

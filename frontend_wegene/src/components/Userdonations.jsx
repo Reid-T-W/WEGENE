@@ -18,6 +18,7 @@ const Userdonations = () => {
     <>
       <Grid mt='50px' align='center'>
       <Userprofileoptions />
+      <Typography mt='20px'> Donations </Typography>
       </Grid>
       <Grid mt="30px">
         <StickyHeadTableForUserDonations />
