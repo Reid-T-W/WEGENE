@@ -23,7 +23,7 @@ Implement Full text search
 This project is open for contributions, feel free to send pull requests, it will really help if you are very clear and specific on what features you added or improved.
 
 ## Authors  
-Rediet Tadesse [Linkedin](https://www.linkedin.com/in/rediet-tadesse-43209013b/) | [Github]  
+Rediet Tadesse [Linkedin](https://www.linkedin.com/in/rediet-tadesse-43209013b/)  
 
 ## Licensing  
 Licensed under the Apache License 2.0  
