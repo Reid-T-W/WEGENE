@@ -2,6 +2,7 @@ const { Router } = require('express');
 const UserController = require('../controllers/UserController');
 const AuthController = require('../controllers/AuthController');
 const PostController = require('../controllers/PostController');
+const PaymentController = require('../controllers/PaymentController');
 
 const router = Router();
 
@@ -112,4 +113,10 @@ router.get('/api/v1/donations', PostController.getAllDonations); // Admin only
 // Get all pending donations made by all users
 router.get('/api/v1/pending-donations', PostController.getAllPendingDonations); // Admin only
 
+// Payment (Chapa)
+router.post('/api/v1/payViaChapa', PaymentController.payViaChapa);
+
+router.get('/api/v1/verify-payment/:id', PaymentController.verifyPayment);
+
+router.get('/api/v1/payment-success', PaymentController.paymentSuccess);
 module.exports = router;

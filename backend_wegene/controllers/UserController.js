@@ -7,6 +7,7 @@ const { getUserByParam, registerUser, updateUserByParam } = require('../utils/da
 const { getAllPostsByParam } = require('../utils/postDao');
 const { getAllDonationsByParam } = require('../utils/donationDao');
 const { getAllPendingDonationsByParam } = require('../utils/pendingDonationDao');
+const { _hashPassword } = require('../utils/utils');
 
 class UserController {
   // Gets a user by given an id
@@ -57,8 +58,15 @@ class UserController {
     }
     // Update the user details
     if (req.body.sessionToken) {
-      return res.status(401).json({ error: 'Illegar request' });
+      return res.status(401).json({ error: 'Illegal request' });
     }
+
+    // Hash the new password, if it has been sent
+    if (req.body.password) {
+      const hashedPassword = _hashPassword(req.body.password);
+      req.body.password = hashedPassword;
+    }
+    
     const updatedUser = await updateUserByParam(req.body, { id });
     return res.status(200).json({ message: `${dbUser.username}'s details are successfully updated`, userData: updatedUser });
   }

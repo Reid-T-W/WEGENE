@@ -9,7 +9,7 @@ const router = require('./routes/index');
 const app = express();
 
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://checkout.chapa.co"],
     credentials: true
 }));
 

@@ -8,14 +8,21 @@ async function addPendingDonation(dict) {
 }
 
 async function getAllPendingDonations() {
-    const dbPendingDonations = await models.PendingDonation.findAll();
+    const dbPendingDonations = await models.PendingDonation.findAll({
+        order: [
+            ['createdAt', 'DESC'],
+        ],
+    });
     return dbPendingDonations;
 }
 
 async function getAllPendingDonationsByParam(param) {
     const dbPendingDonations = await models.PendingDonation.findAll({
         where: param,
-        include: [ models.Post, models.User ]
+        include: [ models.Post, models.User ],
+        order: [
+            ['createdAt', 'DESC'],
+        ],
     });
     return dbPendingDonations;
 }

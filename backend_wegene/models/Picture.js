@@ -7,6 +7,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    // public_id: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
+    // url: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
   }, {});
   Picture.associate = (models) => {
     Picture.belongsTo(models.Post);

@@ -2,7 +2,13 @@ const models = require('../models/index');
 
 async function getAllPosts() {
     const dbPosts = await models.Post.findAll({
-        include: models.User
+        include: [ models.Picture,
+                   models.User,
+                   models.Video,
+                   models.Document],
+        order: [
+          ['createdAt', 'DESC'],
+        ],
     });
     return dbPosts;
 }
@@ -10,7 +16,13 @@ async function getAllPosts() {
 async function getAllPostsByParam(param) {
     const dbPosts = await models.Post.findAll({
         where: param,
-        include: models.User
+        include: [ models.Picture,
+          models.User,
+          models.Video,
+          models.Document],
+        order: [
+          ['createdAt', 'DESC'],
+        ],
     });
     return dbPosts;
 }
@@ -18,7 +30,10 @@ async function getAllPostsByParam(param) {
 async function getPostByParam(param) {
   const dbPosts = await models.Post.findOne({
     where: param,
-    include: models.User
+    include: [ models.Picture,
+      models.User,
+      models.Video,
+      models.Document]
   });
   return dbPosts;
 }

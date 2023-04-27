@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    // public_id: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
+    // url: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
   }, {});
   Document.associate = (models) => {
     Document.belongsTo(models.Post);

@@ -2,6 +2,7 @@ const sha1 = require('sha1');
 // const { ObjectID } = require('mongodb');
 const Queue = require('bull');
 // const redisClient = require('../utils/redis');
+// const cloudinary = require('../utils/cloudinary');
 const User = require('../models/User');
 const { getUserByParam, registerUser, updateUserByParam } = require('../utils/dao');
 const { 
@@ -25,7 +26,9 @@ const {
   getAllDonations,
   getAllDonationsByParam,
   getDonationByParam,
-  deleteDonationByParam } = require('../utils/donationDao');
+  deleteDonationByParam,
+  sumDonationsByPost } = require('../utils/donationDao');
+const db = require('../models');
 
 class PostController {
   // Getting all the posts in the database
@@ -82,7 +85,22 @@ class PostController {
     if (titleUnderUser) {
       return res.status(400).json({ error: 'Post already exists' });
     }
-
+    // // Uploading files to cloudinary
+    // const resultPicture = await cloudinary.uploader.upload(pictureFile,{
+    //   folder: "pictures",
+    //   // width: 300,
+    //   // crop: "scale"
+    // })
+    // const resultVideo = await cloudinary.uploader.upload(videoFile,{
+    //   folder: "vidoes",
+    //   // width: 300,
+    //   // crop: "scale"
+    // })
+    // const resultDocuments = await cloudinary.uploader.upload(documentFile,{
+    //   folder: "documents",
+    //   // width: 300,
+    //   // crop: "scale"
+    // })
     // Save the post to DB
     try {
       const dbPost = await registerPost({
@@ -96,18 +114,24 @@ class PostController {
       if (pictureFile) {
         const dbPicture = await registerPictureForPost({
           pictureFile,
+          // public_id: resultPicture.public_id,
+          // url: resultPicture.secure_url
         });
         dbPicture.setPost(dbPost);
       }
       if (videoFile) {
         const dbVideo = await registerVideoForPost({
           videoFile,
+          // public_id: resultVideo.public_id,
+          // url: resultVideo.secure_url
         });
         dbVideo.setPost(dbPost);
       }
       if (documentFile) {
         const dbDocument = await registerDocumentForPost({
           documentFile,
+          // public_id: resultDocuments.public_id,
+          // url: resultDocuments.secure_url
         });
         dbDocument.setPost(dbPost);
       }
@@ -277,6 +301,12 @@ class PostController {
     dbDonation.setPost(dbPost);
     // Add the donation to the user
     dbDonation.setUser(dbUser);
+    // Get sum of donations for this post
+    const sumOfAllDonationsForPost = await sumDonationsByPost(dbPost.id)
+
+    // Increment the value of totalRaised for Post
+    await updatePostByParam( {totalRaised: sumOfAllDonationsForPost}, { id:dbPost.id });
+    
     return res.status(201).json({ message: `You have successfully donated ${ amount } to ${dbUser.username}'s post titled ${dbPost.title}` });
 
 
@@ -301,8 +331,16 @@ class PostController {
       return res.status(400).json({ error: 'Post not found' });
     }
 
-    // Add the pending donation to the pending donations table
     const { amount } = req.body;
+    // Check if the post has reached its goal
+    if (parseInt(dbPost.totalRaised) >= parseInt(dbPost.amount)){
+      return res.status(400).json({ error: `Thank you but this post has reached its goal`});
+    }
+    if (parseInt(dbPost.totalRaised) + parseInt(amount)>= parseInt(dbPost.amount)){
+      return res.status(400).json({ error: `Please enter an amount less than or equal to ${dbPost.amount - dbPost.totalRaised}`});
+    }
+
+    // Add the pending donation to the pending donations table
     const dbPendingDonation = await addPendingDonation({
       amount,
     })

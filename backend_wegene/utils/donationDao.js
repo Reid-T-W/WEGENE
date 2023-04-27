@@ -8,14 +8,21 @@ async function addDonation(dict) {
 }
 
 async function getAllDonations() {
-    const dbDonations = await models.CompletedDonation.findAll();
+    const dbDonations = await models.CompletedDonation.findAll({
+        order: [
+            ['createdAt', 'DESC'],
+        ],
+    });
     return dbDonations;
 }
 
 async function getAllDonationsByParam(param) {
     const dbDonations = await models.CompletedDonation.findAll({
         where: param,
-        include: [ models.Post, models.User ]
+        include: [ models.Post, models.User ],
+        order: [
+            ['createdAt', 'DESC'],
+        ],
     });
     return dbDonations;
 }
@@ -33,9 +40,15 @@ async function deleteDonationByParam(param) {
     })
 }
 
+async function sumDonationsByPost(postId) {
+    const sum = await models.CompletedDonation.sum('amount', { where: { PostId: postId } });
+    return sum
+}
+
 module.exports = { addDonation,
                    getAllDonations,
                    getAllDonationsByParam,
                    getDonationByParam,
-                   deleteDonationByParam
+                   deleteDonationByParam,
+                   sumDonationsByPost
                 };
