@@ -5,20 +5,20 @@ system.
 Its functionality is that a user can make a post requesting
 for donation, and doners can add donations to that post.
 ## Implemented Features  
-Authentication and Authorization  
-Registering a post  
-Browsing through posts  
-Viewing details of a post  
-Adding a post to pending donations  
-Pay muliple pending donations at once  
-View details of the donations a doner has made  
-View details of a users pending donations  
-Delete a pending donation  
+- [x] Authentication and Authorization  
+- [x] Registering a post  
+- [x] Browsing through posts  
+- [x] Viewing details of a post  
+- [x] Adding a post to pending donations  
+- [x] Pay muliple pending donations at once  
+- [x] View details of the donations a doner has made  
+- [x] View details of a users pending donations  
+- [x] Delete a pending donation  
 
 ## To Do  
-Implement Real time chat with doners and requesters  
-Implemnet Q and A section  
-Implement Full text search  
+- [ ] Implement Real time chat with doners and requesters  
+- [ ] Implemnet Q and A section  
+- [ ] Implement Full text search  
 ## Contributing  
 This project is open for contributions, feel free to send pull requests, it will really help if you are very clear and specific on what features you added or improved.
 
