@@ -137,7 +137,8 @@ class PaymentController {
 
     // Verification endpoint
     static async verifyPayment(req, res) {
-        //verify the transaction 
+        //verify the transaction
+        console.log(req.params.id)
         await axios.get("https://api.chapa.co/v1/transaction/verify/" + req.params.id, config)
             .then((response) => {
                 console.log("Payment was successfully verified")

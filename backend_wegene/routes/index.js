@@ -119,4 +119,8 @@ router.post('/api/v1/payViaChapa', PaymentController.payViaChapa);
 router.get('/api/v1/verify-payment/:id', PaymentController.verifyPayment);
 
 router.get('/api/v1/payment-success', PaymentController.paymentSuccess);
+
+
+// Delete Individual Pending Donation
+router.delete('/api/v1/pending-donations/:id', PostController.deletePendingDonation);
 module.exports = router;

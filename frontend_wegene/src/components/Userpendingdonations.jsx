@@ -30,10 +30,12 @@ const Userpendingdonations = () => {
   const postIndividualPendingDonation = async (pendingDonation) => {
     const url = `http://localhost:5000/api/v1/posts/${pendingDonation.Post.id}/donations`;
     const data = { pendingDonationId: pendingDonation.id }
+    console.log(data)
     const headers = {"session_id": sessionToken};
     return (await postDonationsToAPI(url, data, headers)
     .then((response) => {
-        toast.success(response.data)
+        console.log("in here")
+        // toast.success(response.data)
     })
     .catch((error) => {
         // console.log(error);
@@ -48,33 +50,100 @@ const Userpendingdonations = () => {
     setPendingdonationsCount(0);
 }
 
+  const paymentCheckout = async () => {
+    // let totalPendingDonations = 0;
+    // userPendingDonations.map((pendingDonation) => {totalPendingDonations += pendingDonation.amount})
+    // // Make api call to backend
+    // const url = 'http://localhost:5000/api/v1/payViaChapa';
+    // const headers = {"session_id": sessionToken};
+    // const data = {
+    //   email,
+    //   firstName,
+    //   lastName,
+    //   totalPendingDonations,
+    // }
+    // return (await donateViaChapa(url, data, headers)
+    // .then((url)=>{
+    //   return url
+    // }))
+  }
+
   const donate = async ()=>{
-    // Sum items in the pending donations table and proceed to checkout
-    let totalPendingDonations = 0;
-    userPendingDonations.map((pendingDonation) => {totalPendingDonations += pendingDonation.amount})
-    // Make api call to backend
-    const url = 'http://localhost:5000/api/v1/payViaChapa';
-    const headers = {"session_id": sessionToken};
-    const data = {
-      email,
-      firstName,
-      lastName,
-      totalPendingDonations,
-    }
-    return (await donateViaChapa(url, data, headers)
-    .then((url)=>{
-      const checkoutUrl = url.data.data;
-      // console.log(checkoutUrl);
-      window.location.replace(checkoutUrl)
-      if (url.data.status === "success") {
-        // Add all pending donations to donations table
-        transferPendingDonationsToDonations();
-        toast.success("Donation successful");
-      }
-    })
-    .catch((error) => {console.log(error)})
-    //Execute the following when promise is resolved
-  )
+        // Sum items in the pending donations table and proceed to checkout
+        let totalPendingDonations = 0;
+        userPendingDonations.map((pendingDonation) => {totalPendingDonations += pendingDonation.amount})
+        // Make api call to backend
+        const url = 'http://localhost:5000/api/v1/payViaChapa';
+        const headers = {"session_id": sessionToken};
+        const data = {
+          email,
+          firstName,
+          lastName,
+          totalPendingDonations,
+        }
+        return (await donateViaChapa(url, data, headers)
+        .then((url)=>{
+          if (url.data.status === 200) {
+            // Add all pending donations to donations table
+            transferPendingDonationsToDonations();
+            const checkoutUrl = url.data.data;
+            // console.log(checkoutUrl);
+            window.location.replace(checkoutUrl)
+            // toast.success("Donation successful");
+          }
+        })
+        .catch((error) => {console.log(error)})
+        //Execute the following when promise is resolved
+      )
+    // // Sum items in the pending donations table and proceed to checkout
+    // let totalPendingDonations = 0;
+    // userPendingDonations.map((pendingDonation) => {totalPendingDonations += pendingDonation.amount})
+    // // Make api call to backend
+    // const url = 'http://localhost:5000/api/v1/payViaChapa';
+    // const headers = {"session_id": sessionToken};
+    // const data = {
+    //   email,
+    //   firstName,
+    //   lastName,
+    //   totalPendingDonations,
+    // }
+    // return (await donateViaChapa(url, data, headers)
+    // .then((response)=>{
+    //   console.log(response)
+    //   if (response.data.status === 200) {
+    //     // Add all pending donations to donations table
+    //     // console.log("In here")
+    //     transferPendingDonationsToDonations()
+    //     const checkoutUrl = url.data.data;
+    //     // console.log(checkoutUrl);
+    //     window.location.replace(checkoutUrl)
+    //   }
+    // }).catch((error)=>{
+    //   console.log(error);
+    // }))
+
+
+
+
+
+    // const url = await paymentCheckout()
+    // .then((url)=>{
+    //   console.log("In hereeeeeeeeeeeeeeeeeeee")
+    //   if (url.data.status === 200) {
+    //     // Add all pending donations to donations table
+    //     // console.log("In here")
+    //     transferPendingDonationsToDonations()
+    //     .then(()=>{
+    //       // toast.success("Donation successful");
+    //       const checkoutUrl = url.data.data;
+    //       // console.log(checkoutUrl);
+    //       window.location.replace(checkoutUrl)
+    //     })
+    //   }
+    // })
+    // .catch((error)=>{
+    //   console.log(error);
+    // })
 }
   const btn={margin:'8px 0'}
   return (

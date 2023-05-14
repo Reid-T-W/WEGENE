@@ -44,8 +44,8 @@ const MyUploadedFiles = ({files,
       <p key={fileUrl}>
         <a href={fileUrl} target="_blank">{fileUrl}</a>
         {message==="Upload an image ..."?setImageNewPost(fileUrl):null}
-        {message==="Upload a video ..."?setVideoNewPost(fileUrl):null}
-        {message==="Upload a document ..."?setDocumentNewPost(fileUrl):null}
+        {message==="Upload a video ..."?setVideoNewPost(fileUrl):'https://upcdn.io/W142hox/raw/uploads/2023/04/25/sample_video-6Wht.mp4'}
+        {message==="Upload a document ..."?setDocumentNewPost(fileUrl):'https://upcdn.io/W142hox/raw/uploads/2023/04/25/TestTextFile.txt'}
       </p>
     );
   })

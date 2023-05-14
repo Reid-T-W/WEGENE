@@ -384,6 +384,42 @@ class PostController {
   static async getAllPendingDonations(req, res) {
 
   }
+
+  // Delete pending donation
+  static async deletePendingDonation(req, res) {
+    const { id } = req.params;
+
+    // Check if the post exists
+    const dbPendingDonation = await getPendingDonationByParam({ id });
+    if (!dbPendingDonation) {
+      return res.status(400).json({ error: 'Pending donation not found' });
+    }
+
+    // Extract the session token from req
+    const sessionToken = req.headers.session_id;
+    if (!sessionToken) {
+      return res.status(400).json({ error: 'Please Login First' });
+    }
+
+    // Using the session token, check if the user is logged in
+    const dbUser = await getUserByParam({ sessionToken });
+    if (!dbUser) {
+      return res.status(400).json({ error: 'User not found' });
+    }
+
+    // Check if the user is the owner of the pending donation
+    if (dbPendingDonation.UserId !== dbUser.id) {
+      return res.status(400).json({ error: 'You are not the owner of this pending donation' });
+    }
+
+    // Delete the post in the DB
+    try {
+      await deletePendingDonationByParam({ id });
+      return res.status(201).json({ message: `Pending donation with an amount of ${ dbPendingDonation.amount } successfully deleted` });
+    } catch (error) {
+      return res.status(400).json({ error });
+    }
+  }
 }
 
 module.exports = PostController;

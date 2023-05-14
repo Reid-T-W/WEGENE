@@ -35,14 +35,14 @@ const Postcard = ({id, post}) => {
                 fontweight="bold" color="#3E6D9C">
                     {post.title.slice(0, 60)}
                 </Typography>
-                <Typography variant="subtitle1"
+                {/* <Typography variant="subtitle1"
                 fontweight="bold" color="#3E6D9C">
                     {post.totalRaised}
                     <br/>
                     {post.amount}
                     <br/>
                     {donationProgress()}
-                </Typography>
+                </Typography> */}
                 </Link>
             </CardContent>
         </Link>

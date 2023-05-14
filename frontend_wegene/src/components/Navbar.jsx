@@ -156,7 +156,7 @@ const displayNotificationCount = () => {
             <NotificationsIcon />
           </Button> */}
           
-          <Button color="inherit">
+          <Button onClick={()=>{resetPendingdonationsCount()}}color="inherit">
             <NavLink style={navLinkStyle} to='/userpendingdonations'> 
               <VolunteerActivismIcon />
             </NavLink>

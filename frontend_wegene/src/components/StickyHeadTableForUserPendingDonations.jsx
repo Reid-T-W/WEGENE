@@ -14,6 +14,8 @@ import { Button, Grid, Link, Stack, Typography } from '@mui/material';
 import { useDynamic } from '../contexts/DynamicContext';
 import { useNavigate } from 'react-router-dom';
 import { getUserData } from '../utils/getUserData';
+import { deletePendingDonation } from '../utils/deletePendingDonation';
+import { toast } from 'react-toastify';
 
 const columns = [
   { id: 'title', label: 'Title', minWidth: 170 },
@@ -33,36 +35,77 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'modify',
-    label: 'Edit | Delete',
+    id: 'edit',
+    label: 'Edit',
     minWidth: 170,
-    align: 'right',
+    align: 'left',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'del',
+    label: 'Delete',
+    minWidth: 170,
+    align: 'left',
     format: (value) => value.toLocaleString('en-US'),
   }
 ];
 
-function createData(id, title, category, promised, raised, modify) {
+function createData(id, title, category, promised, raised, edit, del) {
   // const density = population / size;
-  return { id, title, category, promised, raised, modify };
+  return { id, title, category, promised, raised, edit, del };
 }
 
+
+// const editPendingDonation = async() => {
+
+// }
+// const deletePendingDonation = async() => {
+//   // Get the id of the pending donation
+
+// }
+
 const title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-const options = <>
-                  <Stack direction="row">
-                    <Button>
-                      <Edit />
-                    </Button>
-                  <Typography> | </Typography>
-                  <Button>
-                    <DeleteIcon />
-                  </Button>
-                  </Stack>
-                </>
+const edit = <>
+             {/* <Stack direction="row"> */}
+              <Button>
+                <Edit />
+              </Button>
+             {/* </Stack> */}
+            </>
+const del = <>
+              {/* <Stack direction="row"> */}
+                <Button>
+                  <DeleteIcon />
+                </Button>
+              {/* </Stack> */}
+            </>
 
 export default function StickyHeadTableForUserPendingDonations() {
   // Used to navigate to post details
   // when a row is clicked
   const navigate = useNavigate();
+
+  const handleClick = async(pendingDonationId, column, row) => {
+    if (column === 'edit') {
+      toast('edit clicked')
+    }
+    else if (column === 'del') {
+      const url = `http://localhost:5000/api/v1/pending-donations/${pendingDonationId}`;
+      const headers = {"session_id": sessionToken};
+      await deletePendingDonation(url, headers)
+      .then((response)=>{
+        console.log("In here")
+        toast.success(response);
+      })
+      .catch((error) => {
+        console.log(error)
+        toast.error(error);
+      })
+    }
+    else {
+      navigate(`/posts/${row.id}`)
+    }
+  }
 
   const {
     sessionToken,
@@ -109,7 +152,8 @@ export default function StickyHeadTableForUserPendingDonations() {
       userPendingDonation.Post.category,
       userPendingDonation.amount,
       `${Math.floor((userPendingDonation.Post.totalRaised / userPendingDonation.Post.amount) * 100)} %`,
-      options)
+      edit,
+      del)
   })
   // const rows = [
   //   createData(title, 'IN', 1324171354, 3287263, options),
@@ -149,11 +193,13 @@ export default function StickyHeadTableForUserPendingDonations() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                    <TableRow onClick={()=>{navigate(`/posts/${row.id}`)}} hover role="checkbox" tabIndex={-1} key={row.code}>
+                    // <TableRow onClick={()=>{navigate(`/posts/${row.id}`)}} hover role="checkbox" tabIndex={-1} key={row.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.id} align={column.align}>
+                          <TableCell key={column.id} align={column.align} onClick={()=>{handleClick(row.id, column.id, row)}}>
+                          {/* // <TableCell key={column.id} align={column.align} onClick={()=>{value === 'modify'? console.log('modify'):console.log('No')}}> */}
                             {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value}

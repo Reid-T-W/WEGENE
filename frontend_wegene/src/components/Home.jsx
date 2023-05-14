@@ -14,7 +14,7 @@ const Home = () => {
         // style={{ minHeight: '100vh' }}
       >
         {/* <Box width= '500px' mt= '20px'> */}
-        <SearchBar />
+        {/* <SearchBar /> */}
         {/* </Box> */}
       </Grid>
       <Grid
@@ -25,7 +25,7 @@ const Home = () => {
         mt='20px'
         style={{ minHeight: '100vh' }}
       >
-        <Filters />
+        {/* <Filters /> */}
           <Postsfeed />
       </Grid>
     </>
